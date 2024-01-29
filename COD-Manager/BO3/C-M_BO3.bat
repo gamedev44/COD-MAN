@@ -2,67 +2,122 @@
 mode con: cols=80 lines=25
 
 :: Create necessary directories
-if not exist "BO3" mkdir BO3
-if not exist "BO3\Client" mkdir BO3\Client
-if not exist "BO3\SteamPatch" mkdir BO3\SteamPatch
-if not exist "b03MM" mkdir b03MM
-if not exist "b03MM\ModMan" mkdir b03MM\ModMan
-if not exist "b03MM\ModMan\Logs" mkdir b03MM\ModMan\Logs
-if not exist "b03MM\ModMan\Logs\PastInstalls" mkdir b03MM\ModMan\Logs\PastInstalls
-if not exist "b03MM\ModMan\Logs\ErrorLogs" mkdir b03MM\ModMan\Logs\ErrorLogs
-goto title
+echo Checking and creating necessary directories...
 
-:title
+:: Check and create BO3 directory
+if not exist "BO3" (
+    echo Creating BO3 directory...
+    mkdir BO3
+) else (
+    echo BO3 directory already exists.
+)
+
+:: Check and create BO3\Client directory
+if not exist "BO3\Client" (
+    echo Creating BO3\Client directory...
+    mkdir BO3\Client
+) else (
+    echo BO3\Client directory already exists.
+)
+
+:: Check and create BO3\SteamPatch directory
+if not exist "BO3\SteamPatch" (
+    echo Creating BO3\SteamPatch directory...
+    mkdir BO3\SteamPatch
+) else (
+    echo BO3\SteamPatch directory already exists.
+)
+
+:: Check and create b03MM directory
+if not exist "b03MM" (
+    echo Creating b03MM directory...
+    mkdir b03MM
+) else (
+    echo b03MM directory already exists.
+)
+
+:: Check and create b03MM\ModMan directory
+if not exist "b03MM\ModMan" (
+    echo Creating b03MM\ModMan directory...
+    mkdir b03MM\ModMan
+) else (
+    echo b03MM\ModMan directory already exists.
+)
+
+:: Check and create b03MM\ModMan\Logs directory
+if not exist "b03MM\ModMan\Logs" (
+    echo Creating b03MM\ModMan\Logs directory...
+    mkdir b03MM\ModMan\Logs
+) else (
+    echo b03MM\ModMan\Logs directory already exists.
+)
+
+:: Check and create b03MM\ModMan\Logs\PastInstalls directory
+if not exist "b03MM\ModMan\Logs\PastInstalls" (
+    echo Creating b03MM\ModMan\Logs\PastInstalls directory...
+    mkdir b03MM\ModMan\Logs\PastInstalls
+) else (
+    echo b03MM\ModMan\Logs\PastInstalls directory already exists.
+)
+
+:: Check and create b03MM\ModMan\Logs\ErrorLogs directory
+if not exist "b03MM\ModMan\Logs\ErrorLogs" (
+    echo Creating b03MM\ModMan\Logs\ErrorLogs directory...
+    mkdir b03MM\ModMan\Logs\ErrorLogs
+) else (
+    echo b03MM\ModMan\Logs\ErrorLogs directory already exists.
+)
+
+echo Directory check and creation complete.
+pause
+
+:: Menu for further actions
+:menu
 cls
-echo ====================================================
-echo   COD-MANAGER for Black Ops 3   By: Mr. Asterisk   |
-echo ====================================================
-echo.
+echo ========================================
+echo     BO3 CODMAN MAIN MENU By:Asterisk
+echo ========================================
 echo 1. Install Game
 echo 2. Install BO3 Mod Manager
 echo 3. Apply Steam DRM Patch / DLC
 echo 4. Exit
 echo.
-echo Please choose an option:
+set /p ans="Enter your choice [1-4]: "
 
-set /p choice="Enter your choice [1-4]: "
-if "%choice%"=="1" goto InstallGame
-if "%choice%"=="2" goto ModManager
-if "%choice%"=="3" goto SteamDRM
-if "%choice%"=="4" goto End
+if "%ans%"=="1" goto InstallGame
+if "%ans%"=="2" goto InstallModManager
+if "%ans%"=="3" goto ApplySteamDRMPatch
+if "%ans%"=="4" goto End
 
-goto title
+echo Invalid input, please try again.
+pause
+goto menu
 
 :InstallGame
 cls
-echo ==============================================
-echo            Game Installation                 |
-echo ==============================================
-echo.
-echo Are you sure you want to open the torrent file? (Y/N)
-set /p confirm=
-if /I "%confirm%" neq "Y" goto title
-echo Attempting to open the torrent file...
-PowerShell -Command "Start-Process -FilePath 'https://cdn.discordapp.com/attachments/1118286874067357736/1118287465166422138/t7_full_game.torrent?ex=65c2a15c&is=65b02c5c&hm=ec59928d55bee4a1f1853a07c584bc7d528e919f08c060996049acefe54bcf0b'" > b03MM\ModMan\Logs\PastInstalls\install_game_%date%.log 2> b03MM\ModMan\Logs\ErrorLogs\error_game_%date%.log
-goto title
+echo You chose to Install the Game.
+start https://cdn.discordapp.com/attachments/1118286874067357736/1118287465166422138/t7_full_game.torrent
+echo Game installer opened. Press any key to return to the menu...
+pause >nul
+goto menu
 
-:ModManager
+:InstallModManager
 cls
-echo ==============================================
-echo           BO3 Mod Manager Installation       |
-echo ==============================================
-echo.
-start https://github.com/Ezz-lol/boiii-free/releases > b03MM\ModMan\Logs\PastInstalls\install_modmanager_%date%.log 2> b03MM\ModMan\Logs\ErrorLogs\error_modmanager_%date%.log
-goto title
+echo You chose to Install BO3 Mod Manager.
+start https://github.com/Ezz-lol/boiii-free/releases
+echo Mod Manager installer opened. Press any key to return to the menu...
+pause >nul
+goto menu
 
-:SteamDRM
+:ApplySteamDRMPatch
 cls
-echo ==============================================
-echo           Steam DRM and DLC Patch            |
-echo ==============================================
-echo.
-start https://forum.ezz.lol/assets/uploads/files/1687274331519-t7_dlc.torrent > b03MM\ModMan\Logs\PastInstalls\install_steamdrm_%date%.log 2> b03MM\ModMan\Logs\ErrorLogs\error_steamdrm_%date%.log
-goto title
+echo You chose to Apply Steam DRM Patch / DLC.
+start https://forum.ezz.lol/assets/uploads/files/1687274331519-t7_dlc.torrent
+echo Steam DRM Patch / DLC opened. Press any key to return to the menu...
+pause >nul
+goto menu
 
 :End
+echo Exiting the script. Goodbye!
+pause >nul
 exit
