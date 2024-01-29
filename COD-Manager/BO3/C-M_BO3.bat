@@ -10,6 +10,7 @@ if not exist "b03MM\ModMan" mkdir b03MM\ModMan
 if not exist "b03MM\ModMan\Logs" mkdir b03MM\ModMan\Logs
 if not exist "b03MM\ModMan\Logs\PastInstalls" mkdir b03MM\ModMan\Logs\PastInstalls
 if not exist "b03MM\ModMan\Logs\ErrorLogs" mkdir b03MM\ModMan\Logs\ErrorLogs
+goto title
 
 :title
 cls
